@@ -28,8 +28,6 @@ global.beforeAll(async () => {
 
   app.connectMicroservice(getGrpcTestingOptions('sample', protoPath));
 
-  app.connectMicroservice(getRabbitMQOptions('new_queue'));
-
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
   await app.startAllMicroservices();
