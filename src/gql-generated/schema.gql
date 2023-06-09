@@ -2,9 +2,24 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Mutation {
+  signIn(signInData: SignInInput!): SignInReturnModel!
+}
+
 type Query {
   user(id: Int!): User!
   users: [User!]!
+}
+
+input SignInInput {
+  email: String!
+  password: String!
+}
+
+type SignInReturnModel {
+  accessToken: String!
+  email: String!
+  refreshToken: String!
 }
 
 type User {
