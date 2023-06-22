@@ -9,8 +9,7 @@
   "moduleNameMapper": {
     "^@protogen/(.*)$": "<rootDir>/../protogen/$1",
     "^@src/(.*)$": "<rootDir>/../src/$1",
-    "^@common/(.*)$": "<rootDir>/../src/common/$1",
-    "^@prisma/generated$": "<rootDir>/../prisma/generated"
+    "^@common/(.*)$": "<rootDir>/../src/common/$1"
   },
   "setupFilesAfterEnv": ["<rootDir>/setup-jest.ts"]
 }

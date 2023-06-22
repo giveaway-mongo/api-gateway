@@ -2,8 +2,7 @@ FROM node:18-alpine As install
 
 WORKDIR /app
 
-COPY --chown=node:node protogen.sh package.json pnpm-lock.yaml ./
-COPY --chown=node:node prisma ./prisma
+COPY --chown=node:node scripts/protogen.sh package.json pnpm-lock.yaml ./
 COPY --chown=node:node protos ./protos
 
 RUN ls -la
@@ -15,7 +14,7 @@ RUN npm install -g pnpm
 RUN pnpm -v
 RUN pnpm install
 
-RUN apk update && apk add curl
+RUN apk update && apk add curl && apk add bash
 
 # Install protobuf
 ENV PROTOC_ZIP=protoc-3.14.0-linux-x86_64.zip
@@ -37,10 +36,6 @@ RUN ./protogen.sh
 
 RUN ls ./protogen -la
 
-RUN npx prisma generate
-
-RUN ls ./prisma/generated -la
-
 FROM node:18-alpine as test
 
 ARG DATABASE_URL
@@ -51,7 +46,6 @@ WORKDIR /app
 
 COPY . .
 COPY --from=install /app/protogen ./protogen
-COPY --from=install /app/prisma ./prisma
 COPY --from=install /app/node_modules ./node_modules
 
 RUN ls -la
@@ -64,11 +58,9 @@ RUN pnpm -v
 
 RUN npm install -g dotenv-cli
 
-RUN chmod +x ./docker-entrypoint.sh
-
 RUN ls -la
 
-COPY ./docker-entrypoint.sh /
+COPY scripts/docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh
 
 RUN ls / -la

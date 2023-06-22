@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-gateway
+spec:
+  selector:
+    matchLabels:
+      app: api-gateway-app
+  template:
+    metadata:
+      labels:
+        app: api-gateway-app
+    spec:
+      containers:
+        - name: api-gateway
+          image: ghcr.io/giveaway-mongo/api-gateway:latest
+          imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: api-gateway-configmap
+          ports:
+            - containerPort: 8080
+              name: api-gateway-port
+

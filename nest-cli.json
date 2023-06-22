@@ -6,12 +6,12 @@
     "deleteOutDir": true,
     "assets": [
       {
-        "include": "../protos/**/*.proto",
-        "outDir": "./dist/protos/"
+        "include": "../config",
+        "outDir": "./dist/config"
       },
       {
-        "include": "../prisma",
-        "outDir": "./dist/prisma"
+        "include": "../protos/**/*.proto",
+        "outDir": "./dist/protos/"
       }
     ],
     "watchAssets": true

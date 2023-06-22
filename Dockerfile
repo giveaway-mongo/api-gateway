@@ -2,8 +2,7 @@ FROM node:18-alpine As install
 
 WORKDIR /app
 
-COPY --chown=node:node protogen.sh package.json pnpm-lock.yaml ./
-COPY --chown=node:node prisma ./prisma
+COPY --chown=node:node scripts/protogen.sh package.json pnpm-lock.yaml ./
 COPY --chown=node:node protos ./protos
 
 RUN ls -la
@@ -15,7 +14,7 @@ RUN npm install -g pnpm
 RUN pnpm -v
 RUN pnpm install
 
-RUN apk update && apk add curl
+RUN apk update && apk add curl && apk add bash
 
 # Install protobuf
 ENV PROTOC_ZIP=protoc-3.14.0-linux-x86_64.zip
@@ -36,10 +35,6 @@ RUN ./protogen.sh
 
 RUN ls ./protogen -la
 
-RUN npx prisma generate
-
-RUN ls ./prisma/generated -la
-
 FROM node:18-alpine As build
 
 WORKDIR /app
@@ -55,7 +50,6 @@ RUN pnpm -v
 
 COPY --chown=node:node --from=install /app/node_modules ./node_modules
 COPY --chown=node:node --from=install /app/protogen ./protogen
-COPY --chown=node:node --from=install /app/prisma ./prisma
 
 RUN pnpm build
 
@@ -67,9 +61,9 @@ FROM node:18-alpine As production
 WORKDIR /app
 
 COPY --chown=node:node --from=build /app/node_modules ./node_modules
-COPY --chown=node:node --from=build /app/dist ./dist
+COPY --chown=node:node --from=build /app/dist ./
 COPY --chown=node:node --from=build /app/package.json ./package.json
-COPY --chown=node:node --from=build /app/docker-entrypoint.sh ./docker-entrypoint.sh
+COPY --chown=node:node --from=build /app/scripts/docker-entrypoint.sh ./docker-entrypoint.sh
 COPY --chown=node:node --from=build /app/ecosystem.config.js ./ecosystem.config.js
 
 ENV PNPM_HOME=/usr/local/bin
@@ -84,11 +78,11 @@ RUN ls -la
 
 RUN npm install -g dotenv-cli
 
-RUN chmod +x ./docker-entrypoint.sh
 
 RUN ls -la
 
-COPY ./docker-entrypoint.sh /
+COPY scripts/docker-entrypoint.sh /
+RUN chmod +x /docker-entrypoint.sh
 
 # env.RUN must be "production"
 ENTRYPOINT ["/docker-entrypoint.sh"]
