@@ -20,5 +20,5 @@ spec:
                 name: api-gateway-configmap
           ports:
             - containerPort: 8080
-              name: api-gateway-port
+              name: ag-port
 
