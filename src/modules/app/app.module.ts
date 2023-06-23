@@ -6,6 +6,7 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
 import { UsersModule } from '../users/users.module';
 import { AuthModule } from '../auth/auth.module';
+import { PingModule } from '@src/modules/ping/ping.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -17,10 +18,11 @@ import { AuthModule } from '../auth/auth.module';
       autoSchemaFile: join(process.cwd(), 'src/gql-generated/schema.gql'),
       sortSchema: true,
       introspection: true,
-      playground: true
+      playground: true,
     }),
     UsersModule,
     AuthModule,
+    PingModule,
   ],
 })
 export class AppModule {}
