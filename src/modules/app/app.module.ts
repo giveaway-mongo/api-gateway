@@ -16,6 +16,8 @@ import { AuthModule } from '../auth/auth.module';
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/gql-generated/schema.gql'),
       sortSchema: true,
+      introspection: true,
+      playground: true
     }),
     UsersModule,
     AuthModule,
