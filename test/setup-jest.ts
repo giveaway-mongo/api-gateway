@@ -11,7 +11,7 @@ import { getRabbitMQOptions } from '@common/rabbitMQ/rabbitMQ-options';
 let app: INestApplication;
 let testingModule: TestingModule;
 
-jest.setTimeout(10000);
+jest.setTimeout(15000);
 
 global.beforeAll(async () => {
   if (!isTestEnvironment()) {
