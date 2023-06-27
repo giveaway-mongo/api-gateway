@@ -2,17 +2,15 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ClientGrpc } from '@nestjs/microservices';
 import { AUTH_CLIENT } from '@src/constants/client-names';
 import { AuthService as AuthProtoService } from '@protogen/auth/service';
-import { SignInRequest, SignInResponse } from '@protogen/auth/auth';
-
-const promisify = <T extends object>(service: T) => {
-  return new Proxy(service, {
-    get: (service: any, methodName: string) => {
-      return async (...params) => {
-        return await service[methodName](...params).toPromise();
-      };
-    },
-  });
-};
+import {
+  SignInRequest,
+  SignInResponse,
+  SignUpRequest,
+  SignUpResponse,
+  VerifyEmailTokenRequest,
+  VerifyEmailTokenResponse,
+} from '@protogen/auth/auth';
+import { promisify } from '@common/utils/promisify';
 
 @Injectable()
 export class AuthService {
@@ -24,9 +22,24 @@ export class AuthService {
       this.client.getService<AuthProtoService>('AuthService'),
     );
 
-    const response = await this.authService.SignIn(signInRequest);
-    console.log('response', response);
+    return await this.authService.SignIn(signInRequest);
+  }
 
-    return response;
+  async signUp(signUpRequest: SignUpRequest): Promise<SignUpResponse> {
+    this.authService = promisify(
+      this.client.getService<AuthProtoService>('AuthService'),
+    );
+
+    return await this.authService.SignUp(signUpRequest);
+  }
+
+  async verifyEmailToken(
+    verifyEmailTokenRequest: VerifyEmailTokenRequest,
+  ): Promise<VerifyEmailTokenResponse> {
+    this.authService = promisify(
+      this.client.getService<AuthProtoService>('AuthService'),
+    );
+
+    return await this.authService.VerifyEmailToken(verifyEmailTokenRequest);
   }
 }
