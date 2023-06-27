@@ -7,6 +7,7 @@ import { join } from 'path';
 import { UsersModule } from '../users/users.module';
 import { AuthModule } from '../auth/auth.module';
 import { PingModule } from '@src/modules/ping/ping.module';
+
 @Module({
   imports: [
     ConfigModule.forRoot({
