@@ -3,7 +3,7 @@ import { SignInResponse } from '@protogen/auth/auth';
 import { ErrorField } from '@common/models/error.model';
 
 @ObjectType()
-class Result {
+class SignInResult {
   @Field()
   email: string;
 
@@ -17,7 +17,7 @@ class Result {
 @ObjectType()
 export class SignInReturnModel implements SignInResponse {
   @Field()
-  result: Result;
+  result: SignInResult;
 
   @Field()
   errors: ErrorField;

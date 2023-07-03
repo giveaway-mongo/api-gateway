@@ -2,8 +2,22 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type ErrorField {
+  errorCode: Int!
+  fieldErrors: [FieldError!]!
+  nonFieldErrors: [String!]!
+}
+
+type FieldError {
+  location: [String!]!
+  message: String!
+  type: String!
+}
+
 type Mutation {
   signIn(signInData: SignInInput!): SignInReturnModel!
+  signUp(signUpData: SignUpInput!): SignUpReturnModel!
+  verifyEmailTokenReturnModel(verifyEmailTokenData: VerifyEmailTokenInput!): VerifyEmailTokenReturnModel!
 }
 
 type Query {
@@ -16,10 +30,33 @@ input SignInInput {
   password: String!
 }
 
-type SignInReturnModel {
+type SignInResult {
   accessToken: String!
   email: String!
   refreshToken: String!
+}
+
+type SignInReturnModel {
+  errors: ErrorField!
+  result: SignInResult!
+}
+
+input SignUpInput {
+  email: String!
+  fullName: String!
+  password: String!
+  phoneNumber: String!
+}
+
+type SignUpResult {
+  confirmationLink: String!
+  guid: String!
+  verificationToken: String!
+}
+
+type SignUpReturnModel {
+  errors: ErrorField!
+  result: SignUpResult!
 }
 
 type User {
@@ -29,4 +66,13 @@ type User {
   id: Int!
   lastName: String!
   updatedAt: String!
+}
+
+input VerifyEmailTokenInput {
+  guid: String!
+  verificationToken: String!
+}
+
+type VerifyEmailTokenReturnModel {
+  errors: ErrorField!
 }

@@ -29,9 +29,9 @@ export class AuthResolver {
   ): Promise<SignUpReturnModel> {
     try {
       console.log('sign up triggered. Data:', signUpInput);
-      const { errors } = await this.authService.signUp(signUpInput);
+      const { result, errors } = await this.authService.signUp(signUpInput);
 
-      return { result: null, errors };
+      return { result, errors };
     } catch (error) {
       console.log('error', error);
     }
@@ -47,7 +47,7 @@ export class AuthResolver {
         verifyEmailTokenInput,
       );
 
-      return { result: null, errors };
+      return { errors };
     } catch (error) {
       console.log('error', error);
     }

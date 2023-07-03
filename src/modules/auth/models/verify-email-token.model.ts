@@ -5,8 +5,5 @@ import { ErrorField } from '@common/models/error.model';
 @ObjectType()
 export class VerifyEmailTokenReturnModel implements VerifyEmailTokenResponse {
   @Field()
-  result: null;
-
-  @Field()
   errors: ErrorField;
 }
