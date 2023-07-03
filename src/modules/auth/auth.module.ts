@@ -24,7 +24,7 @@ const protoFiles = [
             path.join(process.cwd(), 'protos'),
             protoFiles,
           ),
-          url: 'auth-service:8080',
+          url: 'auth-service',
         },
       },
     ]),
