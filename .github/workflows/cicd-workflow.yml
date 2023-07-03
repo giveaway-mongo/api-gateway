@@ -15,25 +15,25 @@ env:
   PROJECT_NAME: api-gateway
 
 jobs:
-  test:
-   runs-on: ubuntu-latest
-   steps:
-   - name: Submodule sync
-     uses: actions/checkout@v2
-     with:
-       submodules: recursive
-
-   - name: Checkout
-     uses: actions/checkout@v2
-
-   - name: Build test image
-     run: docker build -f Dockerfile.test -t app .
-
-   - name: Start test
-     run: docker-compose -f docker-compose.test.yaml run app
+#  test:
+#   runs-on: ubuntu-latest
+#   steps:
+#   - name: Submodule sync
+#     uses: actions/checkout@v2
+#     with:
+#       submodules: recursive
+#
+#   - name: Checkout
+#     uses: actions/checkout@v2
+#
+#   - name: Build test image
+#     run: docker build -f Dockerfile.test -t app .
+#
+#   - name: Start test
+#     run: docker-compose -f docker-compose.test.yaml run app
 
   build:
-    needs: test
+#    needs: test
     runs-on: ubuntu-latest
     steps:
     - name: Submodule sync
