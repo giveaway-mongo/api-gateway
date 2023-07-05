@@ -15,10 +15,10 @@ class SignUpResult {
 }
 
 @ObjectType()
-export class SignUpReturnModel implements Partial<SignUpResponse> {
-  @Field()
-  result?: SignUpResult;
+export class SignUpReturnModel implements SignUpResponse {
+  @Field({ nullable: true })
+  result: SignUpResult;
 
-  @Field()
-  errors?: ErrorField;
+  @Field({ nullable: true })
+  errors: ErrorField;
 }

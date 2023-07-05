@@ -37,8 +37,8 @@ type SignInResult {
 }
 
 type SignInReturnModel {
-  errors: ErrorField!
-  result: SignInResult!
+  errors: ErrorField
+  result: SignInResult
 }
 
 input SignUpInput {
@@ -55,8 +55,8 @@ type SignUpResult {
 }
 
 type SignUpReturnModel {
-  errors: ErrorField!
-  result: SignUpResult!
+  errors: ErrorField
+  result: SignUpResult
 }
 
 type User {
@@ -74,5 +74,5 @@ input VerifyEmailTokenInput {
 }
 
 type VerifyEmailTokenReturnModel {
-  errors: ErrorField!
+  errors: ErrorField
 }
