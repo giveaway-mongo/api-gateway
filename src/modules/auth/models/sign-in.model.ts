@@ -15,10 +15,10 @@ class SignInResult {
 }
 
 @ObjectType()
-export class SignInReturnModel implements SignInResponse {
+export class SignInReturnModel implements Partial<SignInResponse> {
   @Field()
-  result: SignInResult;
+  result?: SignInResult;
 
   @Field()
-  errors: ErrorField;
+  errors?: ErrorField;
 }

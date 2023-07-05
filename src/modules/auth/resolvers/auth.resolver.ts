@@ -34,6 +34,7 @@ export class AuthResolver {
       return { result, errors };
     } catch (error) {
       console.log('error', error);
+      throw error;
     }
   }
 
@@ -50,6 +51,7 @@ export class AuthResolver {
       return { errors };
     } catch (error) {
       console.log('error', error);
+      throw error;
     }
   }
 }
