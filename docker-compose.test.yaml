@@ -13,7 +13,7 @@ services:
       RABBITMQ_HOST: 'rabbitmq'
       RABBITMQ_USERNAME: 'user'
       RABBITMQ_PASSWORD: 'bitnami'
-      REDIS_URL: 'redis'
+      REDIS_URL: 'redis://redis:6379'
       REDIS_USERNAME: ''
       REDIS_PASSWORD: ''
     depends_on:
