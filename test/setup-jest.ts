@@ -7,6 +7,7 @@ import {
   ServerExceptionFilter,
 } from '@common/utils/rpc-exception.filter';
 import { getRabbitMQOptions } from '@common/rabbitMQ/rabbitMQ-options';
+import redisCache from '@common/redis/cache';
 
 let app: INestApplication;
 let testingModule: TestingModule;
@@ -28,7 +29,7 @@ global.beforeAll(async () => {
     .useGlobalFilters(new ServerExceptionFilter())
     .useGlobalFilters(new RpcExceptionFilter());
 
-  app.useGlobalPipes(new ValidationPipe({ transform: true }));
+  await redisCache.connect();
 
   app.connectMicroservice(getRabbitMQOptions('new_queue'), {
     inheritAppConfig: true,

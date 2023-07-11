@@ -3,7 +3,7 @@ version: '3.9'
 services:
   app:
     build: .
-    image: 'app'
+    image: '${TEST_IMAGE}'
     ports:
       - '8080:50051'
     environment:
@@ -13,6 +13,9 @@ services:
       RABBITMQ_HOST: 'rabbitmq'
       RABBITMQ_USERNAME: 'user'
       RABBITMQ_PASSWORD: 'bitnami'
+      REDIS_URL: 'redis'
+      REDIS_USERNAME: ''
+      REDIS_PASSWORD: ''
     depends_on:
       rabbitmq:
         condition: service_healthy
@@ -37,6 +40,20 @@ services:
       - app-tier
 
 
+  redis:
+    image: 'bitnami/redis:6.2.12'
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    networks:
+      - app-tier
+    ports:
+      - '6379'
+    volumes:
+      - 'redis_data:/bitnami/redis/data'
+
+
 networks:
   app-tier:
     driver: bridge
+  redis_data:
+    driver: local

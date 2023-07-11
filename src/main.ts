@@ -7,11 +7,14 @@ import {
   ServerExceptionFilter,
 } from '@common/utils/rpc-exception.filter';
 import { getRabbitMQOptions } from '@common/rabbitMQ/rabbitMQ-options';
+import redisCache from '@common/redis/cache';
 
 protobufConfigure();
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { snapshot: true });
+
+  await redisCache.connect();
 
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
   app.useGlobalFilters(new ServerExceptionFilter());
