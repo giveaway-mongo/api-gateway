@@ -11,6 +11,13 @@ export class AuthGuard implements CanActivate {
   constructor(private reflector: Reflector) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
+    const role = this.reflector.get<string>('role', context.getHandler());
+    console.log(role);
+
+    if (!role) {
+      return true;
+    }
+
     const ctx = GqlExecutionContext.create(context);
     const request = ctx.getContext().req;
     const authToken = request.headers.auth;
@@ -18,7 +25,10 @@ export class AuthGuard implements CanActivate {
 
     if (!keys.length) {
       throw new RpcException(
-        getErrors({ nonFieldErrors: ['Unauthorized'], errorCode: 401 }),
+        getErrors({
+          nonFieldErrors: ['Unauthorized. No token'],
+          errorCode: 401,
+        }),
       );
     }
 
@@ -26,14 +36,15 @@ export class AuthGuard implements CanActivate {
 
     if (!user) {
       throw new RpcException(
-        getErrors({ nonFieldErrors: ['Unauthorized'], errorCode: 401 }),
+        getErrors({
+          nonFieldErrors: ['Unauthorized. No user'],
+          errorCode: 401,
+        }),
       );
     }
 
     request.user = user;
 
-    const role = this.reflector.get<string>('role', context.getHandler());
-    console.log(role);
     const hasAccess = matchRoles(role, user.role);
 
     if (!hasAccess) {
