@@ -21,6 +21,6 @@ export class ErrorField implements Error {
   @Field(() => Int)
   errorCode: number;
 
-  @Field(() => [String], { nullable: true }g)
+  @Field(() => [String], { nullable: true })
   nonFieldErrors: string[];
 }
