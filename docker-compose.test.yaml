@@ -3,7 +3,7 @@ version: '3.9'
 services:
   app:
     build: .
-    image: 'app'
+    image: '${TEST_IMAGE}'
     ports:
       - '8080:50051'
     environment:
