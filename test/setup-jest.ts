@@ -29,8 +29,6 @@ global.beforeAll(async () => {
     .useGlobalFilters(new ServerExceptionFilter())
     .useGlobalFilters(new RpcExceptionFilter());
 
-  await redisCache.connect();
-
   app.connectMicroservice(getRabbitMQOptions('new_queue'), {
     inheritAppConfig: true,
   });
@@ -38,6 +36,7 @@ global.beforeAll(async () => {
   await app.startAllMicroservices();
   await app.init();
   await app.listen(3001);
+  await redisCache.connect();
 
   (global as any).app = app;
   (global as any).testingModule = testingModule;
