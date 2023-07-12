@@ -15,12 +15,12 @@ class FieldError {
 
 @ObjectType()
 export class ErrorField implements Error {
-  @Field(() => [FieldError])
+  @Field(() => [FieldError], { nullable: true })
   fieldErrors: FieldError[];
 
   @Field(() => Int)
   errorCode: number;
 
-  @Field(() => [String])
+  @Field(() => [String], { nullable: true }g)
   nonFieldErrors: string[];
 }
