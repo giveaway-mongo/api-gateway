@@ -3,7 +3,7 @@ version: '3.9'
 services:
   app:
     build: .
-    image: '${TEST_IMAGE}'
+    image: 'app'
     ports:
       - '8080:50051'
     environment:
@@ -19,8 +19,11 @@ services:
     depends_on:
       rabbitmq:
         condition: service_healthy
+      redis:
+        condition: service_healthy
     links:
       - rabbitmq
+      - redis
     networks:
       - app-tier
 
@@ -48,6 +51,8 @@ services:
       - app-tier
     ports:
       - '6379'
+    healthcheck:
+      test: [ "CMD", "redis-cli", "--raw", "incr", "ping" ]
     volumes:
       - 'redis_data:/bitnami/redis/data'
 
@@ -55,5 +60,7 @@ services:
 networks:
   app-tier:
     driver: bridge
+
+volumes:
   redis_data:
     driver: local
