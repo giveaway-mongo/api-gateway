@@ -4,8 +4,8 @@
 
 type ErrorField {
   errorCode: Int!
-  fieldErrors: [FieldError!]!
-  nonFieldErrors: [String!]!
+  fieldErrors: [FieldError!]
+  nonFieldErrors: [String!]
 }
 
 type FieldError {
