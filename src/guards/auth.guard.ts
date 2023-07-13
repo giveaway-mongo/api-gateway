@@ -58,5 +58,6 @@ export class AuthGuard implements CanActivate {
 }
 
 const matchRoles = (accessRole: string, userRole: string) => {
+  console.log('accessRole', accessRole, 'userRole', userRole);
   return !accessRole || userRole === ROLES.ADMIN || accessRole === userRole;
 };
