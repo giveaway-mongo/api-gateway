@@ -21,8 +21,8 @@ type Mutation {
 }
 
 type Query {
-  user(id: Int!): User!
-  users: [User!]!
+  userDetail(id: Int!): UserDetailReturnModel!
+  users: [UserDetailReturnModel!]!
 }
 
 input SignInInput {
@@ -59,13 +59,21 @@ type SignUpReturnModel {
   result: SignUpResult
 }
 
-type User {
-  age: Int!
+type UserDetailResult {
+  avatar: String!
   createdAt: String!
-  firstName: String!
-  id: Int!
-  lastName: String!
+  email: String!
+  fullName: String!
+  guid: String!
+  id: String!
+  phoneNumber: String!
+  role: String!
   updatedAt: String!
+}
+
+type UserDetailReturnModel {
+  errors: ErrorField
+  result: UserDetailResult
 }
 
 input VerifyEmailTokenInput {
