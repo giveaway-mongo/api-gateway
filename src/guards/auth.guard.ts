@@ -20,7 +20,7 @@ export class AuthGuard implements CanActivate {
 
     const ctx = GqlExecutionContext.create(context);
     const request = ctx.getContext().req;
-    const authToken = request.headers.auth;
+    const authToken = request.headers.authorization;
     const keys = await redisCache.getAuthKeys(authToken);
 
     if (!keys.length) {
