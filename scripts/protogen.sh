@@ -10,6 +10,7 @@ PROTO_PATHS=(
   ./protos/auth/*.proto
   ./protos/user/*.proto
   ./protos/category/*.proto
+  ./protos/deal/*.proto
 )
 
 # For windows and linux based OS, there are different methods for protogen
