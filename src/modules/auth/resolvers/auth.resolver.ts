@@ -6,7 +6,7 @@ import { SignUpReturnModel } from '../models/sign-up.model';
 import { SignUpInput } from '@src/modules/auth/dto/sign-up.input';
 import { VerifyEmailTokenReturnModel } from '@src/modules/auth/models/verify-email-token.model';
 import { VerifyEmailTokenInput } from '@src/modules/auth/dto/verify-email-token.input';
-import { PublicRole } from '@src/decorators/auth.decorator'
+import { PublicRole } from '@src/decorators/auth.decorator';
 
 @Resolver(() => SignInReturnModel)
 export class AuthResolver {

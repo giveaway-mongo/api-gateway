@@ -6,7 +6,11 @@ import { CATEGORY_CLIENT } from '@src/constants/client-names';
 import { generateCommonProtoPaths } from '@common/utils/proto-paths';
 import * as path from 'path';
 
-const protoFiles = ['deal/deal.proto', 'common/common.proto'];
+const protoFiles = [
+  'category/category.proto',
+  'category/service.proto',
+  'common/common.proto',
+];
 
 @Module({
   imports: [

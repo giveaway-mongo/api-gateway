@@ -3,11 +3,16 @@ import { CategoryListRequest } from '@protogen/category/category';
 import { ListOptions } from '@protogen/common/common';
 
 @InputType()
-class CategoryListOptions implements ListOptions {
-  @Field()
-  filter: { [key: string]: string };
+class Filter {
+  [key: string]: string;
+}
 
-  @Field()
+@InputType()
+class CategoryListOptions implements ListOptions {
+  @Field(() => Filter)
+  filter: Filter;
+
+  @Field(() => [String])
   ordering: string[];
 
   @Field()

@@ -6,18 +6,14 @@ import {
 } from '../models/category.model';
 import { CategoriesService } from '../services/categories.service';
 import { CreateCategoryInput } from '../dto/create-category.input';
-import {
-  CategoryCreateResponse,
-  CategoryListRequest,
-  CategoryUpdateResponse,
-} from '@protogen/category/category';
 import { UpdateCategoryInput } from '../dto/update-category.input';
+import { ListCategoryInput } from '../dto/list-category.input';
 
 @Resolver(() => CategoryDetailReturnModel)
 export class CategoriesResolver {
   constructor(private categoriesService: CategoriesService) {}
 
-  @Mutation(() => CategoryCreateResponse)
+  @Mutation(() => CategoryDetailReturnModel)
   @UserRole()
   async categoryCreate(
     @Args('createCategoryInput') createCategoryInput: CreateCategoryInput,
@@ -25,7 +21,7 @@ export class CategoriesResolver {
     return this.categoriesService.create(createCategoryInput);
   }
 
-  @Mutation(() => CategoryUpdateResponse)
+  @Mutation(() => CategoryDetailReturnModel)
   @UserRole()
   async categoryUpdate(
     @Args('id', { type: () => String }) id: string,
@@ -45,7 +41,7 @@ export class CategoriesResolver {
   @Query(() => [CategoryDetailReturnModel])
   @UserRole()
   async categoryList(
-    @Args('categoryListRequest') categoryListRequest: CategoryListRequest,
+    @Args('categoryListRequest') categoryListRequest: ListCategoryInput,
   ) {
     return this.categoriesService.findAll(categoryListRequest);
   }

@@ -9,6 +9,8 @@ import { AuthModule } from '../auth/auth.module';
 import { PingModule } from '@src/modules/ping/ping.module';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from '@src/guards/auth.guard';
+import { CategoriesModule } from '../categories/categories.module';
+import { DealsModule } from '../deals/deals.module';
 
 @Module({
   imports: [
@@ -26,6 +28,8 @@ import { AuthGuard } from '@src/guards/auth.guard';
     UsersModule,
     AuthModule,
     PingModule,
+    DealsModule,
+    CategoriesModule,
   ],
   providers: [
     {
