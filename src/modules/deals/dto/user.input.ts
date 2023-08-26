@@ -1,8 +1,8 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, InputType } from '@nestjs/graphql';
 import { User } from '@protogen/deal/deal';
 
-@ObjectType()
-export class UserModel implements User {
+@InputType()
+export class UserInput implements User {
   @Field()
   guid: string;
 

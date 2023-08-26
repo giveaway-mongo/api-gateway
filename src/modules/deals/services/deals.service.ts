@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { CreateDealInput } from '../dto/create-deal.input';
-// import { UpdateDealInput } from '../dto/update-deal.input';
+import { UpdateDealInput } from '../dto/update-deal.input';
 import { DealDetailReturnModel } from '@src/modules/deals/models/deal.model';
 import { DEAL_CLIENT } from '@src/constants/client-names';
 import { ClientGrpc } from '@nestjs/microservices';
@@ -33,13 +33,13 @@ export class DealsService {
     return await this.dealService.DetailDeal({ guid: id });
   }
 
-  // async update(id: string, updateDealInput: UpdateDealInput) {
-  //   const updateDealData = { guid: id, ...updateDealInput };
-  //   this.dealService = promisify(
-  //     this.client.getService<DealProtoService>('DealsService'),
-  //   );
-  //   return await this.dealService.UpdateDeal(updateDealData);
-  // }
+  async update(id: string, updateDealInput: UpdateDealInput) {
+    const updateDealData = { guid: id, ...updateDealInput };
+    this.dealService = promisify(
+      this.client.getService<DealProtoService>('DealsService'),
+    );
+    return await this.dealService.UpdateDeal(updateDealData);
+  }
 
   // async remove(id: string) {
   //   this.dealService = promisify(

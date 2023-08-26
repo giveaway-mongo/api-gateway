@@ -1,8 +1,8 @@
 import { Field, InputType } from '@nestjs/graphql';
-import { UserModel } from '../models/user.model';
-import { BidModel } from '../models/bid.model';
-import { ReviewModel } from '../models/review.model';
-import { CategoryModel } from '../models/category.model';
+import { UserInput } from './user.input';
+import { BidInput } from './bid.input';
+import { ReviewInput } from './review.input';
+import { CategoryInput } from './category.input';
 
 @InputType()
 export class CreateDealInput {
@@ -25,22 +25,22 @@ export class CreateDealInput {
   status: string;
 
   @Field()
-  author: UserModel;
+  author: UserInput;
 
   @Field()
-  buyer: UserModel;
+  buyer: UserInput;
 
-  @Field(() => [BidModel])
-  bids: BidModel[];
+  @Field(() => [BidInput])
+  bids: BidInput[];
 
-  @Field(() => [ReviewModel])
-  reviews: ReviewModel[];
+  @Field(() => [ReviewInput])
+  reviews: ReviewInput[];
 
-  @Field(() => [UserModel])
-  reportedBy: UserModel[];
+  @Field(() => [UserInput])
+  reportedBy: UserInput[];
 
   @Field()
-  category: CategoryModel;
+  category: CategoryInput;
 
   @Field(() => [String])
   photos: string[];

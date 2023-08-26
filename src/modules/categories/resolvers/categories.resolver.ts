@@ -40,10 +40,8 @@ export class CategoriesResolver {
 
   @Query(() => [CategoryDetailReturnModel])
   @UserRole()
-  async categoryList(
-    @Args('categoryListRequest') categoryListRequest: ListCategoryInput,
-  ) {
-    return this.categoriesService.findAll(categoryListRequest);
+  async categoryList() {
+    return this.categoriesService.findAll(undefined);
   }
 
   @Query(() => CategoryDeleteReturnModel)

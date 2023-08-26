@@ -1,8 +1,8 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, InputType } from '@nestjs/graphql';
 import { Bid } from '@protogen/deal/deal';
 
-@ObjectType()
-export class BidModel implements Bid {
+@InputType()
+export class BidInput implements Bid {
   @Field()
   userGuid: string;
 

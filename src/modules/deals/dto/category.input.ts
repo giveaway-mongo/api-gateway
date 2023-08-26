@@ -1,8 +1,8 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, InputType } from '@nestjs/graphql';
 import { Category } from '@protogen/category/category';
 
-@ObjectType()
-export class CategoryModel implements Category {
+@InputType()
+export class CategoryInput implements Category {
   @Field()
   guid: string;
 

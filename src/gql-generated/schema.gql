@@ -2,6 +2,93 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input BidInput {
+  bid: String!
+  dateOfBid: String!
+  userGuid: String!
+}
+
+type BidModel {
+  bid: String!
+  dateOfBid: String!
+  userGuid: String!
+}
+
+type CategoryDeleteReturnModel {
+  errors: ErrorField
+}
+
+type CategoryDetailResult {
+  description: String!
+  guid: String!
+  parentGuid: String!
+  title: String!
+}
+
+type CategoryDetailReturnModel {
+  errors: ErrorField
+  result: CategoryDetailResult
+}
+
+input CategoryInput {
+  description: String!
+  guid: String!
+  parentGuid: String!
+  title: String!
+}
+
+type CategoryModel {
+  description: String!
+  guid: String!
+  parentGuid: String!
+  title: String!
+}
+
+input CreateCategoryInput {
+  description: String!
+  parentGuid: String
+  title: String!
+  userGuid: String!
+}
+
+input CreateDealInput {
+  activeUntil: String!
+  author: UserInput!
+  bids: [BidInput!]!
+  buyer: UserInput!
+  category: CategoryInput!
+  contactMethod: String!
+  description: String!
+  photos: [String!]!
+  reportedBy: [UserInput!]!
+  reviews: [ReviewInput!]!
+  status: String!
+  title: String!
+  type: String!
+}
+
+type DealDetailResult {
+  activeUntil: String!
+  author: UserModel!
+  bids: [BidModel!]!
+  buyer: UserModel!
+  category: CategoryModel!
+  contactMethod: String!
+  description: String!
+  guid: String!
+  photos: [String!]!
+  reportedBy: [UserModel!]!
+  reviews: [ReviewModel!]!
+  status: String!
+  title: String!
+  type: String!
+}
+
+type DealDetailReturnModel {
+  errors: ErrorField
+  result: DealDetailResult
+}
+
 type ErrorField {
   errorCode: Int!
   fieldErrors: [FieldError!]
@@ -15,14 +102,33 @@ type FieldError {
 }
 
 type Mutation {
+  categoryCreate(createCategoryInput: CreateCategoryInput!): CategoryDetailReturnModel!
+  categoryUpdate(id: String!, updateCategoryInput: UpdateCategoryInput!): CategoryDetailReturnModel!
+  dealCreate(createDealInput: CreateDealInput!): DealDetailReturnModel!
+  dealUpdate(id: String!, updateDealInput: UpdateDealInput!): DealDetailReturnModel!
   signIn(signInData: SignInInput!): SignInReturnModel!
   signUp(signUpData: SignUpInput!): SignUpReturnModel!
   verifyEmailTokenReturnModel(verifyEmailTokenData: VerifyEmailTokenInput!): VerifyEmailTokenReturnModel!
 }
 
 type Query {
+  categoryDelete(id: String!): CategoryDeleteReturnModel!
+  categoryDetail(id: String!): CategoryDetailReturnModel!
+  categoryList: [CategoryDetailReturnModel!]!
+  dealDetail(id: String!): DealDetailReturnModel!
+  deals: [DealDetailReturnModel!]!
   userDetail(id: Int!): UserDetailReturnModel!
   users: [UserDetailReturnModel!]!
+}
+
+input ReviewInput {
+  review: String!
+  userGuid: String!
+}
+
+type ReviewModel {
+  review: String!
+  userGuid: String!
 }
 
 input SignInInput {
@@ -59,6 +165,29 @@ type SignUpReturnModel {
   result: SignUpResult
 }
 
+input UpdateCategoryInput {
+  description: String
+  parentGuid: String
+  title: String
+  userGuid: String
+}
+
+input UpdateDealInput {
+  activeUntil: String
+  author: UserInput
+  bids: [BidInput!]
+  buyer: UserInput
+  category: CategoryInput
+  contactMethod: String
+  description: String
+  photos: [String!]
+  reportedBy: [UserInput!]
+  reviews: [ReviewInput!]
+  status: String
+  title: String
+  type: String
+}
+
 type UserDetailResult {
   avatar: String!
   createdAt: String!
@@ -74,6 +203,30 @@ type UserDetailResult {
 type UserDetailReturnModel {
   errors: ErrorField
   result: UserDetailResult
+}
+
+input UserInput {
+  avatarUrl: String!
+  bidsAvailable: Float!
+  email: String!
+  fullName: String!
+  guid: String!
+  isActive: Boolean!
+  isDeleted: Boolean!
+  phoneNumber: String!
+  role: String!
+}
+
+type UserModel {
+  avatarUrl: String!
+  bidsAvailable: Float!
+  email: String!
+  fullName: String!
+  guid: String!
+  isActive: Boolean!
+  isDeleted: Boolean!
+  phoneNumber: String!
+  role: String!
 }
 
 input VerifyEmailTokenInput {
