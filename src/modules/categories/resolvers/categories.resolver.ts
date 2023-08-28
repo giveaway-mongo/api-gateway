@@ -1,5 +1,5 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { UserRole } from '@src/decorators/auth.decorator';
+import { UserRole, AdminRole } from '@src/decorators/auth.decorator';
 import {
   CategoryDeleteReturnModel,
   CategoryDetailReturnModel,
@@ -7,14 +7,13 @@ import {
 import { CategoriesService } from '../services/categories.service';
 import { CreateCategoryInput } from '../dto/create-category.input';
 import { UpdateCategoryInput } from '../dto/update-category.input';
-import { ListCategoryInput } from '../dto/list-category.input';
 
 @Resolver(() => CategoryDetailReturnModel)
 export class CategoriesResolver {
   constructor(private categoriesService: CategoriesService) {}
 
   @Mutation(() => CategoryDetailReturnModel)
-  @UserRole()
+  @AdminRole()
   async categoryCreate(
     @Args('createCategoryInput') createCategoryInput: CreateCategoryInput,
   ): Promise<CategoryDetailReturnModel> {
@@ -22,7 +21,7 @@ export class CategoriesResolver {
   }
 
   @Mutation(() => CategoryDetailReturnModel)
-  @UserRole()
+  @AdminRole()
   async categoryUpdate(
     @Args('id', { type: () => String }) id: string,
     @Args('updateCategoryInput') updateCategoryInput: UpdateCategoryInput,
@@ -45,7 +44,7 @@ export class CategoriesResolver {
   }
 
   @Query(() => CategoryDeleteReturnModel)
-  @UserRole()
+  @AdminRole()
   async categoryDelete(
     @Args('id', { type: () => String }) id: string,
   ): Promise<CategoryDeleteReturnModel> {
