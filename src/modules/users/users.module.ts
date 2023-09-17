@@ -6,7 +6,11 @@ import { USER_CLIENT } from '@src/constants/client-names';
 import { generateCommonProtoPaths } from '@common/utils/proto-paths';
 import * as path from 'path';
 
-const protoFiles = ['user/user.proto', 'common/common.proto'];
+const protoFiles = [
+  'user/user.proto',
+  'user/service.proto',
+  'common/common.proto'
+];
 
 @Module({
   imports: [
@@ -15,7 +19,8 @@ const protoFiles = ['user/user.proto', 'common/common.proto'];
         name: USER_CLIENT,
         transport: Transport.GRPC,
         options: {
-          package: 'user',
+          // We don't have a separate users service yet
+          package: 'auth',
           protoPath: generateCommonProtoPaths(
             path.join(process.cwd(), 'protos'),
             protoFiles,

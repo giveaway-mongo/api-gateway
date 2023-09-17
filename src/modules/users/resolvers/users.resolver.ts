@@ -1,12 +1,34 @@
-import { Args, Int, Query, Resolver } from '@nestjs/graphql';
-import { UserDetailReturnModel } from '@src/modules/users/models/user.model';
-import { UsersService } from '@src/modules/users/services/users.service';
+import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { AdminRole, UserRole } from '@src/decorators/auth.decorator';
+import {
+  UserCreateReturnModel,
+  UserDetailReturnModel,
+} from '../models/user.model';
+import { UsersService } from '../services/users.service';
+import { CreateUserInput, UpdateUserInput, UserCreateResponse } from '../dto';
 
 @Resolver((of) => UserDetailReturnModel)
 export class UsersResolver {
   constructor(private usersService: UsersService) {}
 
+  @Mutation(() => UserCreateResponse)
+  @AdminRole()
+  async userCreate(
+    @Args('createUserInput') createUserInput: CreateUserInput,
+  ): Promise<UserCreateResponse> {
+    return this.usersService.create(createUserInput);
+  }
+
+  @Mutation(() => UserCreateReturnModel)
+  @AdminRole()
+  async userUpdate(
+    @Args('id') id: string,
+    @Args('updateUserInput') updateUserInput: UpdateUserInput,
+  ) {
+    return this.usersService.update(id, updateUserInput);
+  }
+
+  @Query(() => UserDetailReturnModel)
   @Query((returns) => UserDetailReturnModel)
   @UserRole()
   async userDetail(
