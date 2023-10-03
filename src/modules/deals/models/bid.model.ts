@@ -10,5 +10,8 @@ export class BidModel implements Bid {
   bid: string;
 
   @Field()
-  dateOfBid: string;
+  dateOfBid?: string;
+
+  @Field()
+  order: string;
 }

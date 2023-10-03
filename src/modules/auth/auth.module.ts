@@ -5,6 +5,7 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
 import { AUTH_CLIENT } from '@src/constants/client-names';
 import { generateCommonProtoPaths } from '@common/utils/proto-paths';
 import * as path from 'path';
+import { CLIENT_URLS } from '@src/constants/client-urls';
 
 const protoFiles = [
   'auth/auth.proto',
@@ -24,7 +25,7 @@ const protoFiles = [
             path.join(process.cwd(), 'protos'),
             protoFiles,
           ),
-          url: 'auth-service:50051',
+          url: CLIENT_URLS.auth_client,
         },
       },
     ]),

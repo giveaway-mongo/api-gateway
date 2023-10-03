@@ -3,9 +3,10 @@ import { UserInput } from './user.input';
 import { BidInput } from './bid.input';
 import { ReviewInput } from './review.input';
 import { CategoryInput } from './category.input';
+import { DealCreateRequest } from '@protogen/deal/deal';
 
 @InputType()
-export class CreateDealInput {
+export class CreateDealInput implements DealCreateRequest {
   @Field()
   title: string;
 

@@ -11,4 +11,7 @@ export class BidInput implements Bid {
 
   @Field()
   dateOfBid: string;
+
+  @Field()
+  order: string;
 }

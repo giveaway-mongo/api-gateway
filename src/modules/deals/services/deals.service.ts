@@ -9,35 +9,27 @@ import { promisify } from '@common/utils/promisify';
 
 @Injectable()
 export class DealsService {
-  constructor(@Inject(DEAL_CLIENT) private client: ClientGrpc) {}
-  private dealService: DealProtoService;
-
-  async create(createDealInput: CreateDealInput) {
+  constructor(@Inject(DEAL_CLIENT) private client: ClientGrpc) {
     this.dealService = promisify(
       this.client.getService<DealProtoService>('DealsService'),
     );
+  }
+  private dealService: DealProtoService;
+
+  async create(createDealInput: CreateDealInput) {
     return await this.dealService.CreateDeal(createDealInput);
   }
 
   async findAll() {
-    this.dealService = promisify(
-      this.client.getService<DealProtoService>('DealsService'),
-    );
     return await this.dealService.ListDeal(undefined);
   }
 
   async findOne(id: string): Promise<DealDetailReturnModel> {
-    this.dealService = promisify(
-      this.client.getService<DealProtoService>('DealsService'),
-    );
     return await this.dealService.DetailDeal({ guid: id });
   }
 
   async update(id: string, updateDealInput: UpdateDealInput) {
     const updateDealData = { guid: id, ...updateDealInput };
-    this.dealService = promisify(
-      this.client.getService<DealProtoService>('DealsService'),
-    );
     return await this.dealService.UpdateDeal(updateDealData);
   }
 
