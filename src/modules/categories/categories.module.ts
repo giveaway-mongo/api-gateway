@@ -3,6 +3,7 @@ import { CategoriesResolver } from './resolvers/categories.resolver';
 import { CategoriesService } from './services/categories.service';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { CATEGORY_CLIENT } from '@src/constants/client-names';
+import { CLIENT_URLS } from '@src/constants/client-urls';
 import { generateCommonProtoPaths } from '@common/utils/proto-paths';
 import * as path from 'path';
 
@@ -24,7 +25,7 @@ const protoFiles = [
             path.join(process.cwd(), 'protos'),
             protoFiles,
           ),
-          url: 'category-service:50051',
+          url: CLIENT_URLS.category_client,
         },
       },
     ]),

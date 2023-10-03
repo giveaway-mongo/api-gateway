@@ -1,40 +1,46 @@
-import { Injectable } from '@nestjs/common';
-import { CreateUserInput } from '../dto/create-user.input';
-import { UpdateUserInput } from '../dto/update-user.input';
-import { UserDetailReturnModel } from '@src/modules/users/models/user.model';
+import { Inject, Injectable } from '@nestjs/common';
+import {
+  CreateUserInput,
+  UserListRequest,
+  UpdateUserInput,
+  UserDeleteRequest,
+} from '@src/modules/users/dto';
+import { ClientGrpc } from '@nestjs/microservices';
+import { USER_CLIENT } from '@src/constants/client-names';
+import { promisify } from '@common/utils/promisify';
+import { UsersService as UsersServiceProto } from '@protogen/user/service';
 
 @Injectable()
 export class UsersService {
-  create(createUserInput: CreateUserInput) {
-    return 'This action adds a new user';
+  constructor(@Inject(USER_CLIENT) private client: ClientGrpc) {
+    this.usersService = promisify(
+      this.client.getService<UsersServiceProto>('UsersService'),
+    );
   }
 
-  findAll() {
-    return `This action returns all users`;
+  private usersService: UsersServiceProto;
+
+  async create(createUserInput: CreateUserInput) {
+    return await this.usersService.CreateUser(createUserInput);
   }
 
-  findOne(id: number): Promise<UserDetailReturnModel> {
-    return Promise.resolve({
-      result: {
-        avatar: '',
-        email: '',
-        role: '',
-        fullName: '',
-        guid: '',
-        phoneNumber: '1111',
-        id: '111',
-        createdAt: '12',
-        updatedAt: '11',
-      },
-      errors: null,
-    });
+  async findAll(usersListRequest: UserListRequest) {
+    return await this.usersService.ListUser(usersListRequest);
   }
 
-  update(id: number, updateUserInput: UpdateUserInput) {
-    return `This action updates a #${id} user`;
+  async findOne(id: string) {
+    return await this.usersService.DetailUser({ guid: id });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async update(id: string, updateUserInput: UpdateUserInput) {
+    const updateUserData: UpdateUserInput = { guid: id, ...updateUserInput };
+
+    return await this.usersService.UpdateUser(updateUserData);
+  }
+
+  async remove(id: string) {
+    const deleteUserRequest: UserDeleteRequest = { guid: id };
+
+    return await this.usersService.DeleteUser(deleteUserRequest);
   }
 }

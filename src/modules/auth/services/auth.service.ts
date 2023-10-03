@@ -14,32 +14,24 @@ import { promisify } from '@common/utils/promisify';
 
 @Injectable()
 export class AuthService {
-  constructor(@Inject(AUTH_CLIENT) private client: ClientGrpc) {}
-  private authService: AuthProtoService;
-
-  async signIn(signInRequest: SignInRequest): Promise<SignInResponse> {
+  constructor(@Inject(AUTH_CLIENT) private client: ClientGrpc) {
     this.authService = promisify(
       this.client.getService<AuthProtoService>('AuthService'),
     );
+  }
+  private authService: AuthProtoService;
 
+  async signIn(signInRequest: SignInRequest): Promise<SignInResponse> {
     return await this.authService.SignIn(signInRequest);
   }
 
   async signUp(signUpRequest: SignUpRequest): Promise<SignUpResponse> {
-    this.authService = promisify(
-      this.client.getService<AuthProtoService>('AuthService'),
-    );
-
     return await this.authService.SignUp(signUpRequest);
   }
 
   async verifyEmailToken(
     verifyEmailTokenRequest: VerifyEmailTokenRequest,
   ): Promise<VerifyEmailTokenResponse> {
-    this.authService = promisify(
-      this.client.getService<AuthProtoService>('AuthService'),
-    );
-
     return await this.authService.VerifyEmailToken(verifyEmailTokenRequest);
   }
 }
