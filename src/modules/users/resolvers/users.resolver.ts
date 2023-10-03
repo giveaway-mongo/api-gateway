@@ -1,45 +1,53 @@
-import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { AdminRole, UserRole } from '@src/decorators/auth.decorator';
 import {
   UserCreateReturnModel,
   UserDetailReturnModel,
+  UserUpdateReturnModel,
+  UseListReturnModel,
 } from '../models/user.model';
 import { UsersService } from '../services/users.service';
-import { CreateUserInput, UpdateUserInput, UserCreateResponse } from '../dto';
+import {
+  CreateUserInput,
+  UpdateUserInput,
+  UserListRequest,
+  UserListResponse,
+} from '../dto';
 
 @Resolver((of) => UserDetailReturnModel)
 export class UsersResolver {
   constructor(private usersService: UsersService) {}
 
-  @Mutation(() => UserCreateResponse)
+  @Mutation((returns) => UserCreateReturnModel)
   @AdminRole()
   async userCreate(
     @Args('createUserInput') createUserInput: CreateUserInput,
-  ): Promise<UserCreateResponse> {
+  ): Promise<UserCreateReturnModel> {
     return this.usersService.create(createUserInput);
   }
 
-  @Mutation(() => UserCreateReturnModel)
+  @Mutation((returns) => UserUpdateReturnModel)
   @AdminRole()
   async userUpdate(
-    @Args('id') id: string,
+    @Args('id', { type: () => String }) id: string,
     @Args('updateUserInput') updateUserInput: UpdateUserInput,
-  ) {
+  ): Promise<UserUpdateReturnModel> {
     return this.usersService.update(id, updateUserInput);
   }
 
-  @Query(() => UserDetailReturnModel)
   @Query((returns) => UserDetailReturnModel)
   @UserRole()
   async userDetail(
-    @Args('id', { type: () => Int }) id: number,
+    @Args('id', { type: () => String }) id: string,
   ): Promise<UserDetailReturnModel> {
     return this.usersService.findOne(id);
   }
 
-  @Query((returns) => [UserDetailReturnModel], { name: 'users' })
+  @Query((returns) => UserListResponse)
   @AdminRole()
-  async userList() {
-    return this.usersService.findAll();
+  async userList(
+    @Args('usersListInput') usersListInput: UserListRequest,
+  ): Promise<UseListReturnModel> {
+    return this.usersService.findAll(usersListInput);
   }
 }
